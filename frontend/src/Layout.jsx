@@ -49,28 +49,6 @@ import Envios from "./views/Envios.jsx";
 import AvisoLegal from "./views/AvisoLegal.jsx";
 import ThankYouTransfer from "./components/ThankYouTransfer.jsx";
 
-// Spinner inicio (desactivado)
-
-
-
-// ===============================
-// Spinner con fade suave
-// ===============================
-/* const InicioWithSpinner = ({ images }) => {
-  const [showPage, setShowPage] = useState(false);
-
-  return (
-    <>
-      <Spinner images={images} minDelay={800} onLoadComplete={() => setShowPage(true)} />
-      <div className={showPage ? 'opacity-100' : 'opacity-0'}
-        style={{ transition: 'opacity 3s ease-in-out' }}>
-        <InicioNuevo />
-      </div>
-    </>
-  );
-}; */
-
-
 // ===============================
 // Observa la URL y activa modo mayorista
 // ===============================
@@ -108,11 +86,6 @@ const ConditionalFloatingButtons = () => {
 const Layout = () => {
   const { store, actions } = useContext(Context);
   const [loading, setLoading] = useState(true);
-
-  /*   const inicioImages = [
-      heroBg, banner1, recargables, celu,
-      desechables, perfumes, accesorios, liquidos
-    ]; */
 
   // ===============================
   // Inicialización global app
@@ -155,10 +128,7 @@ const Layout = () => {
 
         <Routes>
 
-          {/* Inicio */}
-          {/*       <Route path="/" element={<InicioWithSpinner images={inicioImages} />} /> */}
           <Route path="/" element={<InicioNuevo />} />
-          {/*     <Route path="/inicio" element={<InicioWithSpinner images={inicioImages} />} /> */}
           <Route path="/inicio" element={<InicioNuevo />} />
 
           {/* Productos */}
