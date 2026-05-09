@@ -7,7 +7,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 		store: {
 			personas: ["Pedro", "Maria"],
 			demoMsg: "",
-			// Store para la tienda de vapes
+			// Store para el catálogo
 			products: [],
 			cart: [],
 			user: null,
@@ -547,7 +547,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 
-			// === ACCIONES PARA LA TIENDA DE VAPES ===
+			// === ACCIONES PARA EL CATÁLOGO ===
 
 			// Categorías
 			fetchCategories: async () => {

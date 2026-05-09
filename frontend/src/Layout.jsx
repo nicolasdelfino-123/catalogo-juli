@@ -21,7 +21,6 @@ import ThankYou from "./views/ThankYou.jsx";
 
 // Componentes
 import Cart from "./components/Cart.jsx";
-/* import ProductGrid from "./components/ProductGrid.jsx"; */
 import Header from "./components/Header.jsx";
 import Footer from "./components/Footer.jsx";
 import NewToast from "./components/NewToast.jsx";
@@ -132,7 +131,6 @@ const Layout = () => {
           <Route path="/inicio" element={<InicioNuevo />} />
 
           {/* Productos */}
-          {/*        <Route path="/products" element={<ProductGrid />} /> */}
           <Route path="/product/:id" element={<ProductDetailNuevo />} />
           <Route path="/mayorista/product/:id" element={<ProductDetailNuevo />} />
 
@@ -155,15 +153,10 @@ const Layout = () => {
           {/* Mayorista inicio */}
           <Route path="/mayorista/inicio" element={<InicioNuevo />} />
 
-          {/* Mayorista productos */}
-          {/*  <Route path="/mayorista/products" element={<ProductGrid />} /> */}
 
 
 
-          {/*           <Route path="/mayorista/categoria/:slug" element={<ProductGrid key="mayorista" />} /> */}
 
-          {/* 
-          <Route path="/categoria/:slug" element={<ProductGrid key="minorista" />} /> */}
 
 
 

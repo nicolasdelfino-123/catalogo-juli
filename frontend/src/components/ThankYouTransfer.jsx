@@ -71,13 +71,13 @@ export default function ThankYouTransfer() {
                         <ul className="mt-3 text-sm space-y-1">
                             <li><strong>Banco:</strong> Banco Nación</li>
                             <li><strong>CBU:</strong> 0112345678901234567890</li>
-                            <li><strong>Alias:</strong> zarpados.vapers</li>
+                            <li><strong>Alias:</strong> alias.pendiente</li>
                             <li><strong>Titular:</strong> Mauricio Fiuri</li>
                         </ul>
 
                         <div className="mt-4 flex flex-col sm:flex-row gap-3">
                             <a
-                                href={`mailto:zarpado.vap@gmail.com?subject=Comprobante%20pedido%20${publicNum}&body=Hola,%20adjunto%20mi%20comprobante%20de%20transferencia.`}
+                                href={`mailto:ventas@example.com?subject=Comprobante%20pedido%20${publicNum}&body=Hola,%20adjunto%20mi%20comprobante%20de%20transferencia.`}
                                 className="px-4 py-2 bg-purple-600 text-white rounded-lg hover:bg-purple-700"
                             >
                                 📧 Enviar por mail

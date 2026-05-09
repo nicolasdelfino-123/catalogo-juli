@@ -269,14 +269,14 @@ export default function Login() {
             <div className="hidden lg:block lg:w-1/2 relative">
                 <img
                     src={hero}
-                    alt="Vapeadores"
+                    alt="Perfumes"
                     className="absolute inset-0 h-full w-full object-cover"
                 />
                 <div className="absolute inset-0 bg-purple-900 bg-opacity-60 flex items-center justify-center">
                     <div className="text-center text-white px-8">
-                        <h2 className="text-4xl font-bold mb-4">Bienvenido a Zarpados Vapers</h2>
+                        <h2 className="text-4xl font-bold mb-4">Bienvenido a la tienda</h2>
                         <p className="text-lg">
-                            Los mejores productos de vapeo con envíos a todo el país
+                            Perfumería con envíos a todo el país
                         </p>
                     </div>
                 </div>

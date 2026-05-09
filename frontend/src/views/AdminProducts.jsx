@@ -1112,7 +1112,7 @@ export default function AdminProducts() {
 
         const matchesCategory =
             selectedCategory === "Todos" ||
-            normalizeCategoryLabel(ID_TO_CATEGORY_NAME[p.category_id]) === normalizeCategoryLabel(selectedCategory); // 👈
+            normalizeCategoryLabel(getDisplayCategoryName(p)) === normalizeCategoryLabel(selectedCategory);
 
         const isActive = Boolean(p?.is_active);
         const matchesStatus =
@@ -1657,7 +1657,7 @@ export default function AdminProducts() {
                                                 </div>
                                             )}
                                         </td>
-                                        <td className="hidden p-2 text-center md:table-cell">{ID_TO_CATEGORY_NAME[p.category_id]}</td>
+                                        <td className="hidden p-2 text-center md:table-cell">{getDisplayCategoryName(p)}</td>
                                         <td className="hidden p-2 text-center md:table-cell">
                                             {/* Toggle visual Estado con aviso solo en filtro activos/inactivos */}
                                             <button
@@ -1797,7 +1797,7 @@ export default function AdminProducts() {
 
                                                     setForm({
                                                         ...p,
-                                                        category_id: Number(p.category_id) === 6 ? 1 : p.category_id,
+                                                        category_id: p.category_id,
                                                         price: "",
                                                         price_wholesale: "",
                                                         volume_ml: "",
@@ -1859,7 +1859,7 @@ export default function AdminProducts() {
                                                     </div>
                                                     <div>
                                                         <div className="text-xs uppercase tracking-wide text-gray-500">Categoria</div>
-                                                        <div className="mt-1">{ID_TO_CATEGORY_NAME[p.category_id]}</div>
+                                                        <div className="mt-1">{getDisplayCategoryName(p)}</div>
                                                     </div>
                                                     <div>
                                                         <div className="text-xs uppercase tracking-wide text-gray-500">Desc. corta</div>
@@ -2243,123 +2243,6 @@ export default function AdminProducts() {
                                 ))}
                             </div>
                         )}
-
-                        {/*
-<label className="block text-sm font-medium text-gray-700 mb-1">
-  Puffs (caladas)
-</label>
-<input
-  className="w-full border rounded px-3 py-2"
-  placeholder="Ej: 10000"
-  type="number"
-  min={0}
-  step={1}
-  inputMode="numeric"
-  pattern="\d*"
-  {...noSpin}
-  value={
-    form.puffs === "" ||
-    form.puffs === null ||
-    form.puffs === undefined
-      ? ""
-      : form.puffs
-  }
-  onChange={(e) => {
-    const v = e.target.value;
-    setForm((prev) => ({
-      ...prev,
-      puffs: v === "" ? "" : Math.max(0, Math.floor(Number(v))),
-    }));
-  }}
-/>
-
-{shouldShowFlavors(form.category_id) && (
-  <>
-    <label className="flex items-center gap-2 mb-2">
-      <input
-        type="checkbox"
-        checked={Boolean(form.flavor_stock_mode)}
-        onChange={(e) => {
-          const checked = e.target.checked;
-          setForm((prev) => {
-            const safeCatalog = Array.isArray(prev.flavor_catalog)
-              ? prev.flavor_catalog
-              : [];
-            return {
-              ...prev,
-              flavor_stock_mode: checked,
-              flavor_enabled: checked ? true : prev.flavor_enabled,
-              flavor_catalog: safeCatalog,
-              stock: checked
-                ? sumActiveFlavorStock(safeCatalog)
-                : prev.stock,
-            };
-          });
-        }}
-      />
-      Usar stock por sabor
-    </label>
-
-    {form.flavor_stock_mode && (
-      <div className="space-y-2">
-        <label className="block text-sm font-medium mb-1">
-          Sabores
-        </label>
-
-        <FlavorPills
-          catalog={
-            Array.isArray(form.flavor_catalog)
-              ? form.flavor_catalog
-              : (form.flavors || []).map((n) => ({
-                  name: n,
-                  active: true,
-                  stock: 0,
-                }))
-          }
-          onChange={(next) =>
-            setForm((prev) => {
-              const activos = next.filter((x) => x.active);
-              const total = sumActiveFlavorStock(next);
-              return {
-                ...prev,
-                flavor_catalog: next,
-                flavors: activos.map((x) => x.name),
-                stock: prev.flavor_stock_mode ? total : prev.stock,
-              };
-            })
-          }
-        />
-
-        <div className="text-xs text-gray-600">
-          Total (activos):
-          <strong>
-            {sumActiveFlavorStock(form.flavor_catalog || [])}
-          </strong>
-        </div>
-      </div>
-    )}
-  </>
-)}
-*/}
-                        {/* Stock general: solo visible si NO usamos stock por sabor */}
-                        {/*  <label className="block text-sm font-medium text-gray-700 mb-1">
-                            Stock
-                        </label>
-
-                        <input
-                            className="w-full border rounded px-3 py-2"
-                            placeholder="Stock"
-                            type="number"
-                            min={0}
-                            step={1}
-                            {...noSpin}
-                            value={Number.isFinite(Number(form.stock)) ? form.stock : 0}
-                            onChange={(e) => {
-                                const n = Math.max(0, Math.floor(Number(e.target.value) || 0))
-                                setForm({ ...form, stock: n })
-                            }}
-                            required
-                        /> */}
 
                         <label className="block text-sm font-medium text-gray-700 mb-1">Imagen del producto</label>
 

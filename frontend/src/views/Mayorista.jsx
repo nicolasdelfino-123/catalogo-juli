@@ -1,4 +1,3 @@
-import ProductGrid from "../components/ProductGrid";
 import ProductGridNuevo from "../components/ui/product/ProductGridNuevo";
 
 export default function Mayorista() {
