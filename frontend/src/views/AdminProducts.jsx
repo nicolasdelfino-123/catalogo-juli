@@ -844,13 +844,11 @@ export default function AdminProducts() {
 
     const deleteSelectedImage = async () => {
         if (!form) return;
-        if (!form.id) {
-            alert("Primero guardá el producto para poder borrar su imagen.");
-            return;
-        }
 
         const selectedUrl = String(form.image_url || "");
         const imageId = extractImageId(selectedUrl);
+
+        if (!selectedUrl || isDefaultImage(selectedUrl)) return;
 
         if (!confirm("¿Eliminar la foto seleccionada? Esta acción no se puede deshacer.")) return;
 
@@ -874,12 +872,22 @@ export default function AdminProducts() {
                     const nextGallery = (prev.image_urls || []).filter(u => normalizeImagePath(u) !== deletedUrl);
                     let nextMain = prev.image_url;
                     if (normalizeImagePath(prev.image_url) === deletedUrl) {
-                        nextMain = nextGallery[0] || sinImagen; // 👈 fallback correcto
+                        nextMain = nextGallery[0] || (prev.id ? sinImagen : "");
                     }
                     return { ...prev, image_urls: nextGallery, image_url: nextMain };
                 });
 
             } else {
+                if (!form.id) {
+                    setForm(prev => {
+                        if (!prev) return prev;
+                        const target = normalizeImagePath(selectedUrl);
+                        const nextGallery = (prev.image_urls || []).filter(u => normalizeImagePath(u) !== target);
+                        return { ...prev, image_urls: nextGallery, image_url: nextGallery[0] || "" };
+                    });
+                    return;
+                }
+
                 // ===== Caso imagen externa (scraping, http/https): "borrar" = limpiar campo =====
                 // 1) Actualizar en backend el producto, dejando image_url vacío
                 const res = await fetch(`${API}/admin/products/${form.id}`, {

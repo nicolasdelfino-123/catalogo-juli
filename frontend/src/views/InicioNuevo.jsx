@@ -23,7 +23,8 @@ export default function InicioNuevo() {
     const { store, actions } = useContext(Context);
     const location = useLocation();
     const navigate = useNavigate();
-    const banner = `/${storeConfig.media.heroImage}`;
+    const heroImageDesktop = `/${storeConfig.media.heroImageDesktop || storeConfig.media.heroImage || ""}`;
+    const heroImageMobile = `/${storeConfig.media.heroImageMobile || storeConfig.media.heroImageDesktop || storeConfig.media.heroImage || ""}`;
 
     useEffect(() => {
         if (actions?.fetchProducts) {
@@ -104,7 +105,7 @@ export default function InicioNuevo() {
                     {/* IMAGEN SIN ALTURA FIJA */}
                     <div className="w-full">
                         <img
-                            src={banner}
+                            src={heroImageMobile}
                             alt="banner"
                             className="
                 w-full
@@ -191,7 +192,7 @@ export default function InicioNuevo() {
                 brightness-110
                 saturate-110
             "
-                        style={{ backgroundImage: `url(${banner})` }}
+                        style={{ backgroundImage: `url(${heroImageDesktop})` }}
                     />
 
                     <div className="
@@ -322,7 +323,7 @@ shadow-lg shadow-amber-500/20
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 items-center">
                     {/* Columna izquierda: texto */}
                     <div className="md:col-span-1 text-center md:text-left">
-                        <span className="inline-block text-lg tracking-wider font-semibold text-gray-700 bg-purple-50 border border-purple-100 rounded-full px-3 py-1">
+                        <span className="block text-sm tracking-[0.18em] font-semibold uppercase text-gray-500">
                             ¡Contactanos!
                         </span>
 
@@ -407,10 +408,11 @@ shadow-lg shadow-amber-500/20
     }
   `}</style>
             </section>
+            {storeConfig.features?.showBrandCarousel !== false && (
             <section className="relative bg-white py-8 fade-in-section border-y border-gray-200">
-                {/*  <div className="relative z-10 overflow-hidden whitespace-nowrap mx-0 md:mx-[104px]">
+                <div className="relative z-10 overflow-hidden whitespace-nowrap mx-0 md:mx-[104px]">
                     <div className="brands-track will-change-transform">
-                 
+	                 
                         <div className="brands-group">
                             <div className="brand-container">
                                 <img src={afnan} alt="Afnan" className="brand-img" />
@@ -479,7 +481,7 @@ shadow-lg shadow-amber-500/20
                         </div>
                     </div>
                 </div>
- */}
+
                 <style>{`
         .brands-track {
             display: inline-flex;
@@ -517,10 +519,11 @@ shadow-lg shadow-amber-500/20
         }
 
        /*  .brands-track:hover {
-            animation-play-state: paused;
-        } */
-    `}</style>
+	            animation-play-state: paused;
+	        } */
+	    `}</style>
             </section>
+            )}
 
 
         </div>

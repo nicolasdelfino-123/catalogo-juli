@@ -3,6 +3,7 @@ export const storeConfig = {
 
     features: {
         showHeaderContact: true,
+        showBrandCarousel: true,
         headerTheme: "white", // "black" | "white"
         footerTheme: "white", // "black" | "white"
     },
@@ -54,7 +55,8 @@ export const storeConfig = {
 
     // Estas imagenes se cargan desde frontend/public usando rutas tipo "/archivo".
     media: {
-        heroImage: "f3_si.png",
+        heroImageDesktop: "f3_si.png",
+        heroImageMobile: "f3_si.png",
         headerLogo: "logo_attar_prueba.png",
         footerLogo: "logo_danna.jpeg",
     },
