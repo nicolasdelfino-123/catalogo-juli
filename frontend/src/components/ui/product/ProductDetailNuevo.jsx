@@ -283,6 +283,14 @@ export default function ProductDetailNuevo() {
         return getMaxStock() - (inCart?.quantity || 0);
     };
 
+    const availableStock = product ? getAvailableStock() : 0;
+
+    useEffect(() => {
+        if (!product) return;
+        const nextMax = Math.max(1, availableStock);
+        if (quantity > nextMax) setQuantity(nextMax);
+    }, [product?.id, selectedFlavor, selectedSizeMl, availableStock, quantity]);
+
     /* =========================
        HANDLERS
     ========================= */
@@ -385,10 +393,15 @@ export default function ProductDetailNuevo() {
 
                     {/* IMAGEN */}
                     <div>
-                        <div className="bg-white border border-stone-200 rounded-xl p-4 sm:p-6">
+                        <div className="relative overflow-hidden bg-white border border-stone-200 rounded-xl p-4 sm:p-6">
+                            {availableStock <= 0 && (
+                                <div className="absolute right-3 top-3 z-10 whitespace-nowrap rounded-full border border-amber-300/70 bg-black/85 px-2 py-0.5 text-[8px] font-semibold uppercase leading-tight tracking-wide text-amber-100 shadow-lg shadow-black/20 backdrop-blur-sm sm:right-4 sm:top-4 sm:px-3 sm:py-1.5 sm:text-xs">
+                                    Sin stock · Próximo ingreso
+                                </div>
+                            )}
                             <img
                                 src={toAbsUrl(activeImg) || sinImagen}
-                                className="w-full object-contain"
+                                className={`w-full object-contain ${availableStock <= 0 ? "blur-[1.5px] saturate-75 opacity-80" : ""}`}
                                 onError={e => (e.currentTarget.src = sinImagen)}
                             />
                         </div>
@@ -481,7 +494,8 @@ export default function ProductDetailNuevo() {
                         <div className="flex items-center gap-3 mb-4">
                             <button
                                 type="button"
-                                className="w-9 h-9 rounded bg-stone-100 hover:bg-stone-200 border border-stone-200 flex items-center justify-center text-lg"
+                                disabled={availableStock <= 0 || quantity <= 1}
+                                className="w-9 h-9 rounded bg-stone-100 hover:bg-stone-200 border border-stone-200 flex items-center justify-center text-lg disabled:cursor-not-allowed disabled:opacity-50"
                                 onClick={() => setQuantity(Math.max(1, quantity - 1))}
                             >
                                 -
@@ -489,9 +503,10 @@ export default function ProductDetailNuevo() {
                             <span className="min-w-[36px] text-center font-medium text-stone-800">{quantity}</span>
                             <button
                                 type="button"
-                                className="w-9 h-9 rounded bg-stone-100 hover:bg-stone-200 border border-stone-200 flex items-center justify-center text-lg"
+                                disabled={availableStock <= 0 || quantity >= availableStock}
+                                className="w-9 h-9 rounded bg-stone-100 hover:bg-stone-200 border border-stone-200 flex items-center justify-center text-lg disabled:cursor-not-allowed disabled:opacity-50"
                                 onClick={() =>
-                                    setQuantity(Math.min(getAvailableStock(), quantity + 1))
+                                    setQuantity(Math.min(availableStock, quantity + 1))
                                 }
                             >
                                 +
@@ -500,14 +515,14 @@ export default function ProductDetailNuevo() {
 
                         <button
                             onClick={handleAddToCart}
-                            disabled={getAvailableStock() <= 0}
-                            className={`w-full py-3 rounded-md font-medium text-sm tracking-wide transition-all duration-300 ${getAvailableStock() <= 0
+                            disabled={availableStock <= 0}
+                            className={`w-full py-3 rounded-md font-medium text-sm tracking-wide transition-all duration-300 ${availableStock <= 0
                                 ? "border border-stone-300 bg-stone-100 text-white cursor-not-allowed shadow-none hover:bg-stone-100"
                                 : "bg-black text-white hover:bg-stone-800"
                                 }`}
                         >
-                            <span className={getAvailableStock() <= 0 ? "text-stone-900" : ""}>
-                                {getAvailableStock() <= 0 ? "Agotado" : "Agregar al carrito"}
+                            <span className={`whitespace-nowrap ${availableStock <= 0 ? "text-stone-900" : ""}`}>
+                                {availableStock <= 0 ? "Próximo Ingreso" : "Agregar al carrito"}
                             </span>
                         </button>
 
