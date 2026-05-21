@@ -22,6 +22,39 @@ import ray from '../assets/raysi.jpg'
 
 const API = getApiUrl();
 
+const cssValue = (value, fallback) =>
+    value === undefined || value === null || value === "" ? fallback : value;
+
+const buildHeroFrameStyle = (settings = {}, defaults = {}) => ({
+    minHeight: cssValue(settings.sectionMinHeight, defaults.sectionMinHeight),
+    paddingTop: cssValue(settings.sectionPaddingTop, defaults.sectionPaddingTop),
+    paddingBottom: cssValue(settings.sectionPaddingBottom, defaults.sectionPaddingBottom),
+    marginTop: cssValue(settings.sectionMarginTop, defaults.sectionMarginTop),
+    marginBottom: cssValue(settings.sectionMarginBottom, defaults.sectionMarginBottom),
+});
+
+const buildHeroImageStyle = (settings = {}, defaults = {}) => ({
+    width: cssValue(settings.imageWidth, defaults.imageWidth),
+    maxWidth: cssValue(settings.imageMaxWidth, defaults.imageMaxWidth),
+    height: cssValue(settings.imageHeight, defaults.imageHeight),
+    minHeight: cssValue(settings.imageMinHeight, defaults.imageMinHeight),
+    maxHeight: cssValue(settings.imageMaxHeight, defaults.imageMaxHeight),
+    objectFit: cssValue(settings.imageFit, defaults.imageFit),
+    objectPosition: cssValue(settings.imagePosition, defaults.imagePosition),
+    transform: `translate(${cssValue(settings.imageOffsetX, defaults.imageOffsetX)}, ${cssValue(settings.imageOffsetY, defaults.imageOffsetY)})`,
+});
+
+const buildHeroTextBlockStyle = (settings = {}, base = {}) => ({
+    height: cssValue(settings.height, "auto"),
+    paddingTop: cssValue(settings.paddingTop, "24px"),
+    paddingBottom: cssValue(settings.paddingBottom, "24px"),
+    paddingLeft: cssValue(settings.paddingX, "20px"),
+    paddingRight: cssValue(settings.paddingX, "20px"),
+    marginTop: cssValue(settings.marginTop, "0px"),
+    marginBottom: cssValue(settings.marginBottom, "0px"),
+    background: cssValue(base.background, "#000000"),
+});
+
 export default function InicioNuevo() {
     const { store, actions } = useContext(Context);
     const location = useLocation();
@@ -29,6 +62,11 @@ export default function InicioNuevo() {
     const [homeFeaturedIds, setHomeFeaturedIds] = useState(null);
     const heroImageDesktop = `/${storeConfig.media.heroImageDesktop || storeConfig.media.heroImage || ""}`;
     const heroImageMobile = `/${storeConfig.media.heroImageMobile || storeConfig.media.heroImageDesktop || storeConfig.media.heroImage || ""}`;
+    const heroConfig = storeConfig.hero || {};
+    const desktopHero = heroConfig.desktop || {};
+    const mobileHero = heroConfig.mobile || {};
+    const textBlockConfig = heroConfig.textBlock || {};
+    const showHeroTextBlock = textBlockConfig.enabled === true;
 
     useEffect(() => {
         if (actions?.fetchProducts) {
@@ -118,127 +156,99 @@ export default function InicioNuevo() {
         <div className="min-h-screen bg-gray-50">
 
 
-            {/* HERO PREMIUM CON IMAGEN IMPORTADA */}
+            {/* HERO PREMIUM CON IMAGEN CONFIGURABLE DESDE storeConfig */}
             <section className="relative overflow-hidden bg-[#0B0608] text-center">
-
-                {/* =========================
-       MOBILE / TABLET
-       ========================= */}
-                <div className="lg:hidden">
-                    {/* IMAGEN SIN ALTURA FIJA */}
-                    <div className="w-full">
-                        <img
-                            src={heroImageMobile}
-                            alt="banner"
-                            className="
-                w-full
-                h-auto
-                object-contain   /* 🔥 CLAVE: NO RECORTA */
-                brightness-110
-                saturate-110
-                "
-                        />
-                    </div>
-
-                    {/* BLOQUE NEGRO DINÁMICO */}
-                    <div className="
-            bg-black
-            px-5
-            py-6
-            sm:px-6
-            sm:py-7
-            
-
-            flex flex-col items-center justify-center
-        ">
-
-                        <h1 className="
-                text-[22px]
-                sm:text-[24px]
-                leading-tight
-                font-serif
-                font-semibold
-                text-white
-                tracking-wide
-                mb-3
-            ">
-                            {storeConfig.branding.heroTitle}
-                        </h1>
-
-                        <p className="
-                text-[14px]
-                sm:text-[15px]
-                leading-relaxed
-                font-serif
-                text-gray-200
-                tracking-wide
-                max-w-[320px]
-                sm:max-w-[420px]
-                mx-auto
-            ">
-                            {storeConfig.branding.heroSubtitle}
-                        </p>
-
-                    </div>
-                </div>
-
-                {/* =========================
-       DESKTOP (NO TOCAR)
-       ========================= */}
-                <div
-                    className="
-        hidden lg:flex
-        relative
-        min-h-[calc(100vh-80px)]
-        items-end
-        justify-center
-        overflow-hidden
-    "
-                >
-
-                    <div
-                        className="
-        absolute inset-0
-        bg-no-repeat
-        bg-cover
-        bg-center
-        brightness-110
-        saturate-110
-    "
-                        style={{ backgroundImage: `url(${heroImageDesktop})` }}
+                <div className="lg:hidden" style={buildHeroFrameStyle(mobileHero, {
+                    sectionMinHeight: "auto",
+                    sectionPaddingTop: "80px",
+                    sectionPaddingBottom: "0px",
+                    sectionMarginTop: "0px",
+                    sectionMarginBottom: "0px",
+                })}>
+                    <img
+                        src={heroImageMobile}
+                        alt="banner"
+                        className="mx-auto block brightness-110 saturate-110"
+                        style={buildHeroImageStyle(mobileHero, {
+                            imageWidth: "100%",
+                            imageMaxWidth: "100%",
+                            imageHeight: "auto",
+                            imageMinHeight: "auto",
+                            imageMaxHeight: "none",
+                            imageFit: "contain",
+                            imagePosition: "center center",
+                            imageOffsetX: "0px",
+                            imageOffsetY: "0px",
+                        })}
                     />
 
-                    <div className="
-            relative z-10
-            w-full
-            max-w-3xl
-            px-6
-            pb-12
-        ">
+                    {showHeroTextBlock && (
+                        <div
+                            className="flex flex-col items-center justify-center"
+                            style={buildHeroTextBlockStyle(textBlockConfig.mobile, textBlockConfig)}
+                        >
+                            <h1
+                                className="mb-3 font-serif text-[22px] font-semibold leading-tight tracking-wide sm:text-[24px]"
+                                style={{ color: cssValue(textBlockConfig.textColor, "#ffffff") }}
+                            >
+                                {storeConfig.branding.heroTitle}
+                            </h1>
 
-                        <h1 className="
-                text-3xl
-                font-serif
-                font-semibold
-                text-white
-                tracking-wide
-                mb-4
-            ">
-                            {storeConfig.branding.heroTitle}
-                        </h1>
-
-                        <p className="
-                text-xl
-                font-serif
-                text-gray-200
-                tracking-wide
-            ">
-                            {storeConfig.branding.heroSubtitle}
-                        </p>
-
-                    </div>
+                            <p
+                                className="mx-auto max-w-[420px] font-serif text-[14px] leading-relaxed tracking-wide sm:text-[15px]"
+                                style={{ color: cssValue(textBlockConfig.subtitleColor, "#e5e7eb") }}
+                            >
+                                {storeConfig.branding.heroSubtitle}
+                            </p>
+                        </div>
+                    )}
                 </div>
 
+                <div className="hidden lg:block" style={buildHeroFrameStyle(desktopHero, {
+                    sectionMinHeight: "auto",
+                    sectionPaddingTop: "0px",
+                    sectionPaddingBottom: "0px",
+                    sectionMarginTop: "0px",
+                    sectionMarginBottom: "0px",
+                })}>
+                    <img
+                        src={heroImageDesktop}
+                        alt="banner"
+                        className="mx-auto block brightness-110 saturate-110"
+                        style={buildHeroImageStyle(desktopHero, {
+                            imageWidth: "100%",
+                            imageMaxWidth: "100%",
+                            imageHeight: "auto",
+                            imageMinHeight: "auto",
+                            imageMaxHeight: "calc(100vh - 80px)",
+                            imageFit: "contain",
+                            imagePosition: "center center",
+                            imageOffsetX: "0px",
+                            imageOffsetY: "0px",
+                        })}
+                    />
+
+                    {showHeroTextBlock && (
+                        <div
+                            className="flex flex-col items-center justify-center"
+                            style={buildHeroTextBlockStyle(textBlockConfig.desktop, textBlockConfig)}
+                        >
+                            <h1
+                                className="mb-4 font-serif text-3xl font-semibold tracking-wide"
+                                style={{ color: cssValue(textBlockConfig.textColor, "#ffffff") }}
+                            >
+                                {storeConfig.branding.heroTitle}
+                            </h1>
+
+                            <p
+                                className="font-serif text-xl tracking-wide"
+                                style={{ color: cssValue(textBlockConfig.subtitleColor, "#e5e7eb") }}
+                            >
+                                {storeConfig.branding.heroSubtitle}
+                            </p>
+                        </div>
+                    )}
+                </div>
             </section>
             {/* 
             <div className="relative z-10 overflow-hidden whitespace-nowrap bg-gradient-to-r from-black via-[#0B0608] to-black py-3">

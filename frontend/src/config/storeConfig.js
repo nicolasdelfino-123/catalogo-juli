@@ -29,6 +29,72 @@ export const storeConfig = {
         /*       footerText: "Perfumes árabes originales en Argentina.", */
     },
 
+    hero: {
+        // Defaults responsive: si dejás estos valores como están, la imagen no se recorta.
+        // Para ajustar manualmente podés usar px, %, vh, vw, calc(...), etc.
+        desktop: {
+            sectionPaddingTop: "0px",
+            sectionPaddingBottom: "0px",
+            sectionMarginTop: "0px",
+            sectionMarginBottom: "0px",
+            sectionMinHeight: "auto",
+
+            imageWidth: "100%",
+            imageMaxWidth: "100%",
+            imageHeight: "auto",
+            imageMinHeight: "auto",
+            imageMaxHeight: "calc(100vh - 80px)",
+            imageFit: "cover", // "contain" no recorta | "cover" llena y puede recortar
+            imagePosition: "center center",
+            imageOffsetX: "0px",
+            imageOffsetY: "0px",
+        },
+
+        mobile: {
+            // En mobile el header es fixed; este padding evita que el hero quede debajo.
+            sectionPaddingTop: "80px",
+            sectionPaddingBottom: "0px",
+            sectionMarginTop: "0px",
+            sectionMarginBottom: "0px",
+            sectionMinHeight: "auto",
+
+            imageWidth: "100%",
+            imageMaxWidth: "100%",
+            imageHeight: "auto",
+            imageMinHeight: "auto",
+            imageMaxHeight: "none",
+            imageFit: "contain",
+            imagePosition: "center center",
+            imageOffsetX: "0px",
+            imageOffsetY: "0px",
+        },
+
+        textBlock: {
+            enabled: false,
+            background: "#000000",
+            textColor: "#ffffff",
+            subtitleColor: "#e5e7eb",
+
+            desktop: {
+                height: "auto",
+                paddingTop: "24px",
+                paddingBottom: "24px",
+                paddingX: "24px",
+                marginTop: "0px",
+                marginBottom: "0px",
+            },
+
+            mobile: {
+                height: "auto",
+                paddingTop: "24px",
+                paddingBottom: "24px",
+                paddingX: "20px",
+                marginTop: "0px",
+                marginBottom: "0px",
+            },
+        },
+    },
+
     catalog: {
         // Cambia el texto chico de las cards del listado: "category" muestra la categoría y "brand" muestra la marca del producto.
         productCardMeta: "brand", // "category" | "brand"

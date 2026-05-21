@@ -325,7 +325,7 @@ export default function Header() {
     <>
       <header
         className={[
-          `fixed top-0 left-0 right-0 md:sticky md:top-0 z-50 ${headerSurfaceClass} overflow-visible`,
+          `fixed top-0 left-0 right-0 lg:sticky lg:top-0 z-50 ${headerSurfaceClass} overflow-visible`,
           "transition-shadow duration-300",
           isScrolled ? "shadow-lg" : "shadow-none"
         ].join(" ")}
@@ -343,7 +343,7 @@ export default function Header() {
 
             {/* Mobile hamburger menu - left */}
             {/* Mobile hamburger menu - left */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 aria-label="Abrir menú"
@@ -361,13 +361,13 @@ export default function Header() {
                 <img
                   src={headerLogo}
                   alt={storeConfig.storeName.trim()}
-                  className="mt-[-0px] md:mt-[-0px] h-[55px] md:h-[55px] object-contain transition-all duration-300"
+                  className="mt-[-0px] lg:mt-[-0px] h-[55px] lg:h-[55px] object-contain transition-all duration-300"
                 />
               </Link>
             </div>
 
             {/* Navigation - Desktop */}
-            <nav className="hidden md:flex h-full items-center space-x-10 font-serif tracking-wider text-sm uppercase">
+            <nav className="hidden lg:flex h-full items-center space-x-10 font-serif tracking-wider text-sm uppercase">
               <Link to={withWholesale("/inicio")} className={`${headerLinkClass} transition-all duration-300`}>Inicio</Link>
 
 
@@ -523,7 +523,7 @@ export default function Header() {
             </nav>
 
             {/* Desktop Actions */}
-            <div className={`hidden md:flex items-center space-x-4 ${isWhiteHeader ? "text-gray-950" : "text-white"} ml-8`}>
+            <div className={`hidden lg:flex items-center space-x-4 ${isWhiteHeader ? "text-gray-950" : "text-white"} ml-8`}>
               <AccountDropdown />
               {/* Lupa Desktop */}
 
@@ -556,7 +556,7 @@ export default function Header() {
             </div>
 
             {/* Mobile cart - right */}
-            <div className="md:hidden">
+            <div className="lg:hidden">
               <button
                 type="button"
                 onClick={() => setCartOpen(true)}
@@ -574,7 +574,7 @@ export default function Header() {
             </div>
           </div>
 
-          <div className="md:hidden px-5 pb-4">
+          <div className="lg:hidden px-5 pb-4">
             <div className="relative" ref={searchBoxRef}>
               <div className={`relative ${mobileSearchSurfaceClass} -mx-9 px-4 py-2 rounded-md`}>
                 <input
@@ -664,7 +664,7 @@ export default function Header() {
 
           {/* Search Box desktop */}
           {mobileSearchOpen && (
-            <div className="hidden md:block bg-gray-1000 p-3 z-50">
+            <div className="hidden lg:block bg-gray-1000 p-3 z-50">
               <div className="flex justify-end px-4 sm:px-6 lg:px-8">
                 <div className="static w-full max-w-md" ref={searchBoxRef}>
                   <div className="flex">
@@ -751,7 +751,7 @@ export default function Header() {
           {/* Mobile Menu */}
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden absolute left-0 right-0 top-full z-50">
+            <div className="lg:hidden absolute left-0 right-0 top-full z-50">
               <div
                 ref={mobileMenuRef}
                 className={`${mobileMenuSurfaceClass} max-h-[calc(100vh-5rem)] overflow-y-auto overscroll-contain shadow-xl px-4 pt-1 pb-5 space-y-3 font-serif tracking-wide`}
@@ -890,7 +890,7 @@ export default function Header() {
         <Cart isOpen={cartOpen} onClose={() => setCartOpen(false)} />
       </header>
 
-      <div className="block md:hidden h-[128px]" aria-hidden="true" />
+      <div className="block lg:hidden h-[128px]" aria-hidden="true" />
     </>
   );
 }
