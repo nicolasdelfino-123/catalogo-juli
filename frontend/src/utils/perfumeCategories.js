@@ -8,6 +8,10 @@ const PERFUME_CATEGORY_ID_DEFINITIONS = [
     { id: 1, fallbackName: "Masculinos", slug: "masculinos" },
     { id: 2, fallbackName: "Femeninos", slug: "femeninos" },
     { id: 3, fallbackName: "Unisex", slug: "unisex" },
+    { id: 4, fallbackName: "Perfumes de Diseñador", slug: "perfumes-de-disenador" },
+    { id: 5, fallbackName: "Perfumes de Nicho", slug: "perfumes-de-nicho" },
+    { id: 6, fallbackName: "Body Splash", slug: "body-splash" },
+    { id: 7, fallbackName: "Perfumes Árabes", slug: "perfumes-arabes" },
 ];
 
 const slugifyCategoryLabel = (value = "") =>

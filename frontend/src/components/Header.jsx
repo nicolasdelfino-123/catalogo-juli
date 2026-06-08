@@ -270,9 +270,8 @@ export default function Header() {
     })),
   }));
   const activeProductCategory =
-    productCategories.find((category) => category.route === activeProductCategoryRoute) ||
-    productCategories.find((category) => category.children.length > 0) ||
-    null;
+    productCategories.find((category) => category.route === activeProductCategoryRoute) || null;
+  const activeProductCategoryHasChildren = activeProductCategory?.children?.length > 0;
 
   const goToContact = (e) => {
     e.preventDefault();
@@ -376,15 +375,12 @@ export default function Header() {
                 onMouseEnter={() => {
                   if (productsCloseTimer.current) clearTimeout(productsCloseTimer.current);
                   setProductsDropdownOpen(true);
-                  if (!activeProductCategoryRoute) {
-                    const firstWithChildren = productCategories.find((category) => category.children.length > 0);
-                    setActiveProductCategoryRoute(firstWithChildren?.route || "");
-                  }
                 }}
                 onMouseLeave={() => {
                   if (productsCloseTimer.current) clearTimeout(productsCloseTimer.current);
                   productsCloseTimer.current = setTimeout(() => {
                     setProductsDropdownOpen(false);
+                    setActiveProductCategoryRoute("");
                   }, 180);
                 }}
               >
@@ -392,10 +388,7 @@ export default function Header() {
                   onClick={() => {
                     const nextOpen = !productsDropdownOpen;
                     setProductsDropdownOpen(nextOpen);
-                    if (nextOpen && !activeProductCategoryRoute) {
-                      const firstWithChildren = productCategories.find((category) => category.children.length > 0);
-                      setActiveProductCategoryRoute(firstWithChildren?.route || "");
-                    }
+                    setActiveProductCategoryRoute("");
                   }}
                   className={`flex items-center ${headerLinkClass} transition-all duration-300 bg-transparent p-0 border-0 rounded-none appearance-none focus:outline-none focus:ring-0 hover:bg-transparent active:bg-transparent uppercase`}
                   style={{ backgroundColor: 'transparent', boxShadow: 'none' }}
@@ -414,7 +407,7 @@ export default function Header() {
 
                 {/* Dropdown Menu */}
                 <div
-                  className={`absolute left-0 top-full -mt-px w-[38rem] ${dropdownSurfaceClass}
+                  className={`absolute left-0 top-full -mt-px ${activeProductCategoryHasChildren ? "w-[38rem]" : "w-[17rem]"} ${dropdownSurfaceClass}
   rounded-b-xl rounded-t-none
   shadow-2xl
   backdrop-blur-lg z-50 overflow-hidden
@@ -423,11 +416,12 @@ export default function Header() {
 `}
                 >
 
-                  <div className={`grid grid-cols-[17rem_1fr] border-t-2 ${dropdownTopBorderClass}`}>
+                  <div className={`grid ${activeProductCategoryHasChildren ? "grid-cols-[17rem_1fr]" : "grid-cols-[17rem]"} border-t-2 ${dropdownTopBorderClass}`}>
                     <div className={`py-3 border-r ${isWhiteHeader ? "border-gray-100" : "border-amber-500/10"}`}>
                       <Link
                         to={withWholesale("/products")}
                         className={`flex items-center px-5 py-3 text-[15px] ${dropdownLinkClass} transition-all duration-200`}
+                        onMouseEnter={() => setActiveProductCategoryRoute("")}
                         onClick={() => {
                           window.scrollTo({ top: 0, behavior: "smooth" });
                           setProductsDropdownOpen(false);
@@ -445,6 +439,7 @@ export default function Header() {
                               key={category.route}
                               to={withWholesale(category.route)}
                               className={`block px-5 py-3 text-[15px] ${dropdownLinkClass} transition-all duration-200`}
+                              onMouseEnter={() => setActiveProductCategoryRoute("")}
                               onClick={() => {
                                 window.scrollTo({ top: 0, behavior: "smooth" });
                                 setProductsDropdownOpen(false);
@@ -474,8 +469,8 @@ export default function Header() {
                       })}
                     </div>
 
-                    <div className="py-3">
-                      {activeProductCategory?.children?.length > 0 ? (
+                    {activeProductCategoryHasChildren && (
+                      <div className="py-3">
                         <>
                           <div className={`px-5 pb-2 text-[13px] uppercase tracking-wider ${isWhiteHeader ? "text-gray-500" : "text-gray-500"}`}>
                             {activeProductCategory.name.toUpperCase()}
@@ -494,12 +489,8 @@ export default function Header() {
                             </Link>
                           ))}
                         </>
-                      ) : (
-                        <div className={`px-5 py-3 text-[15px] ${isWhiteHeader ? "text-gray-500" : "text-gray-500"}`}>
-                          Selecciona una categoría
-                        </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
                   </div>
                 </div>
 

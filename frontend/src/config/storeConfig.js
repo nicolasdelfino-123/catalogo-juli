@@ -105,9 +105,20 @@ export const storeConfig = {
         // El orden de esta lista define el orden visual en los dropdowns y menús.
         // slug es opcional; si no lo ponés, usa el slug técnico definido en perfumeCategories o lo genera desde el label.
         categories: [
-            { id: 1, label: "Masculinos", slug: "masculinos", emoji: "🖤" },
-            { id: 2, label: "Femeninos", slug: "femeninos", emoji: "🌸" },
-            { id: 3, label: "Unisex", slug: "unisex", emoji: "✨" },
+            {
+                id: 7,
+                label: "Perfumes Árabes",
+                slug: "perfumes-arabes",
+                emoji: "✨",
+                children: [
+                    { id: 1, label: "Masculinos", slug: "masculinos", emoji: "🖤" },
+                    { id: 2, label: "Femeninos", slug: "femeninos", emoji: "🌸" },
+                    { id: 3, label: "Unisex", slug: "unisex", emoji: "✨" },
+                ],
+            },
+            { id: 4, label: "Perfumes de Diseñador", slug: "perfumes-de-disenador", emoji: "◆" },
+            { id: 5, label: "Perfumes de Nicho", slug: "perfumes-de-nicho", emoji: "◇" },
+            { id: 6, label: "Body Splash", slug: "body-splash", emoji: "•" },
         ],
     },
 
