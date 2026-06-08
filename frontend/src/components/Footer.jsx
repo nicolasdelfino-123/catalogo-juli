@@ -17,9 +17,8 @@ const isWhiteFooter = footerTheme === "white";
 const footerTextClass = isWhiteFooter ? "text-gray-800" : "text-gray-300";
 const footerMutedClass = isWhiteFooter ? "text-gray-600" : "text-gray-400";
 const footerHeadingClass = isWhiteFooter ? "text-gray-950" : "text-gray-200";
-const footerLinkClass = isWhiteFooter
-    ? "relative hover:text-gray-950 transition-all duration-300 after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-gray-950 after:transition-all after:duration-300 hover:after:w-full"
-    : "relative hover:text-amber-300 transition-all duration-300 after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-amber-400 after:transition-all after:duration-300 hover:after:w-full";
+const footerLinkClass =
+    "relative font-bold text-gray-950 hover:text-[#b8860b] transition-all duration-300 after:absolute after:-bottom-1 after:left-0 after:w-0 after:h-[1px] after:bg-[#b8860b] after:transition-all after:duration-300 hover:after:w-full";
 const footerBorderClass = isWhiteFooter ? "border-gray-200" : "border-yellow-600/20";
 const footerDeveloperLinkClass = isWhiteFooter ? "hover:text-gray-950" : "hover:text-white";
 
