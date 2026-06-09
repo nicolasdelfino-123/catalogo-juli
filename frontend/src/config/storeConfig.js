@@ -95,6 +95,16 @@ export const storeConfig = {
         },
     },
 
+    homeMarquee: {
+        enabled: true,
+        texts: [
+            "Cuotas sin interés",
+            "Efectivo / Transferencia / Mercado Pago",
+            "Perfumería Original",
+        ],
+        separator: "•",
+    },
+
     catalog: {
         // Cambia el texto chico de las cards del listado: "category" muestra la categoría y "brand" muestra la marca del producto.
         productCardMeta: "brand", // "category" | "brand"
