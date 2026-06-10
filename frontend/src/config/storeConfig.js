@@ -2,7 +2,7 @@ export const storeConfig = {
     storeName: " Store Perfumes",
 
     features: {
-        showHeaderContact: true,
+        showHeaderContact: false,
         showBrandCarousel: true,
         headerTheme: "white", // "black" | "white"
         footerTheme: "white", // "black" | "white"
@@ -139,12 +139,12 @@ export const storeConfig = {
     },
 
     contact: {
-        whatsapp: "5493534793366",
+        whatsapp: "5493415490640",
         whatsappMessage: "Hola, quiero consultar por un perfume del catálogo",
-        whatsappDisplay: "+56 9 6407 7278",
+        whatsappDisplay: "+54 9 3415 49-0640",
 
-        instagram: "https://www.instagram.com/danna_decants_puq/",
-        instagramDisplay: "@danna_decants_puq",
+        instagram: "https://www.instagram.com/perfumes_importados_outlett/",
+        instagramDisplay: "@perfumes_importados_outlett",
 
         email: "nicolasdelfino585@gmail.com",
         /*  emailDisplay: "nicolasdelfino585@gmail.com", */
@@ -162,7 +162,7 @@ export const storeConfig = {
         // Hero mobile: se carga desde frontend/public. Escribi solo el nombre del archivo o una ruta publica, por ejemplo "f3_si.png".
         heroImageMobile: "banner_celu_si.png",
         // GIF del GlobalSpinner: se carga desde frontend/public. Si queres cambiarlo, pone el GIF en public y actualiza este nombre.
-        globalSpinnerGif: "danna_spinner.gif",
+        globalSpinnerGif: "spin_juli.gif",
         headerLogo: "logo_si.jpeg",
         footerLogo: "logo.jpeg",
     },
