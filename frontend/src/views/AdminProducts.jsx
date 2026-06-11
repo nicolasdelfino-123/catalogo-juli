@@ -9,6 +9,7 @@ import AdminBudgetModal from "../components/admin/AdminBudgetModal.jsx";
 import {
     CATEGORY_ID_TO_NAME as ID_TO_CATEGORY_NAME,
     getDisplayCategoryName,
+    getNormalizedCategoryId,
     mapCategoryIdFromName,
     PERFUME_CATEGORY_DEFINITIONS,
 } from "../utils/perfumeCategories.js";
@@ -20,6 +21,11 @@ const normalizeCategoryLabel = (value = "") =>
     String(value || "")
         .trim()
         .toLowerCase();
+
+const collectCategoryIds = (category) => [
+    Number(category.id),
+    ...(category.children || []).flatMap(collectCategoryIds),
+].filter((id) => Number.isFinite(id));
 
 const parseFlexibleDecimal = (value) => {
     if (value === "" || value === null || value === undefined) return null;
@@ -1245,6 +1251,13 @@ export default function AdminProducts() {
 
     const selectedBudgetCount = selectedBudgetItems.length;
 
+    const selectedCategoryDefinition = categories.find(
+        (cat) => normalizeCategoryLabel(cat.name) === normalizeCategoryLabel(selectedCategory)
+    );
+    const selectedCategoryIds = selectedCategoryDefinition
+        ? new Set(collectCategoryIds(selectedCategoryDefinition))
+        : null;
+
     const filtered = products.filter((p) => {
         const matchesSearch =
             !q ||
@@ -1256,7 +1269,10 @@ export default function AdminProducts() {
             (selectedCategory === HOME_CATEGORY_FILTER && featuredProductIds.includes(Number(p.id))) ||
             (
                 selectedCategory !== HOME_CATEGORY_FILTER &&
-                normalizeCategoryLabel(getDisplayCategoryName(p)) === normalizeCategoryLabel(selectedCategory)
+                (
+                    selectedCategoryIds?.has(getNormalizedCategoryId(p)) ||
+                    normalizeCategoryLabel(getDisplayCategoryName(p)) === normalizeCategoryLabel(selectedCategory)
+                )
             );
 
         const isActive = Boolean(p?.is_active);
