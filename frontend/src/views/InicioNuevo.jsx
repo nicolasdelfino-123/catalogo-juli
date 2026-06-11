@@ -329,7 +329,7 @@ export default function InicioNuevo() {
                     </div>
                 )}
             </section>
-            <div className="flex justify-center mt-0 mb-1 lg:px-12 lg:py-12">
+            <div className="flex justify-center mt-0 mb-12 lg:mb-1 lg:px-12 lg:py-12">
                 <div
                     onClick={() => navigate(location.pathname.startsWith("/mayorista") ? "/mayorista/products" : "/products")}
                     className="
